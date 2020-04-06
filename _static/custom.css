@@ -1,0 +1,9 @@
+
+.wy-side-nav-search, .wy-nav-top {
+    background: #232020;
+}
+
+.wy-side-nav-search>a img.logo, .wy-side-nav-search .wy-dropdown>a img.logo {
+    max-width: 50%;
+}
+
