@@ -135,6 +135,21 @@ $ ansible-playbook main.yml --skip-tags='red'     #-->slank1
         {% endfor %}
 ```
 
+## Vault
+
+ansible-vault で文字列を暗号化する時は, 以下のようにやるとミスるので.
+```
+echo 'PASSWORD' | ansible-vault encrypt_string
+echo -n 'PASSWORD' | ansible-vault encrypt_string
+```
+
+以下のようにやるとよい.
+```
+ansible-vault encrypt_string 'PASSWORD' --name 'name_is_here'
+```
+
+special thanks: Kento.kawakami -san
+
 ## References
 
 - @tmurakam99, "Ansible でよく使うモジュールまとめ",
