@@ -443,8 +443,8 @@ get credentials
 
 .. code-block:: python
 
+  # this is old version
   def get_keystone_creds():
-      import os
       d = {}
       d['username'] = os.environ['OS_USERNAME']
       d['password'] = os.environ['OS_PASSWORD']
@@ -452,8 +452,8 @@ get credentials
       d['tenant_name'] = os.environ['OS_TENANT_NAME']
       return d
 
+  # this is old version
   def get_nova_creds():
-      import os
       d = {}
       d['username'] = os.environ['OS_USERNAME']
       d['api_key'] = os.environ['OS_PASSWORD']
@@ -461,27 +461,72 @@ get credentials
       d['project_id'] = os.environ['OS_TENANT_NAME']
       return d
 
+  def get_keystone_password_creds():
+    d = {}
+    d['user_domain_name'] = "default"
+    d['project_domain_name'] = "default"
+    d['username'] = os.environ['OS_USERNAME']
+    d['password'] = os.environ['OS_PASSWORD']
+    d['auth_url'] = os.environ['OS_AUTH_URL']
+    d['project_name'] = os.environ['OS_PROJECT_NAME']
+    return d
+
+  def get_nova_credentials_v2():
+      d = {}
+      d['version'] = '2.1'
+      d['user_domain_name'] = "default"
+      d['project_domain_name'] = "default"
+      d['username'] = os.environ['OS_USERNAME']
+      d['password'] = os.environ['OS_PASSWORD']
+      d['auth_url'] = os.environ['OS_AUTH_URL']
+      d['project_name'] = os.environ['OS_PROJECT_NAME']
+      return d
+
 get auth token
 
 .. code-block:: python
 
+  # this is old
   import keystoneclient.v2_0.client as ksclient
   creds = get_keystone_creds()
   keystone = ksclient.Client(**creds)
   print(keystone.auth_token) # u'fI9JnOBZJwuoma8je0a1AvLff6AcJ1zFkVZGb'
 
+  # correct
+  from keystoneclient.v3.client import Client as KC
+  from keystoneauth1 import identity
+  from keystoneauth1 import session
+  creds = get_keystone_creds()
+  auth = identity.v3.Password(**creds)
+  sess = session.Session(auth=auth)
+  keystone_client = KC(session=sess)
+  data = auth.get_auth_ref(sess)
+  print(data.__dict__['_auth_token'])
+
 list servers
 
 .. code-block:: python
 
+  #old
   from novaclient import client as novaclient
   creds = get_nova_creds()
   nova = novaclient.Client("2.0", **creds)
   print(nova.servers.list()) # [<Server: test1>, <Server: test2>]
-
   sv = nova.servers.list()[0]
   sv.name # test1
   sv.__dict__['OS-EXT-SRV-ATTR:hypervisor_hostname'] # hv01
+
+  # correct
+  from novaclient.client import Client as NC
+  creds = get_nova_credentials_v2()
+  nova_client = NC(**creds)
+  servers = nova_client.servers.list(search_opts={
+          'all_tenants': 1,
+          'tenant_id': "af2d74ba14fa40f8a607f383e13729d8", })
+  for server in servers:
+      info = server.to_dict()
+      print('id={} name={} created={}'.format(info['id'], info['name'], info['created']))
+
 
 
 example server monitor program
