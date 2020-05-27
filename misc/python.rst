@@ -527,6 +527,11 @@ list servers
       info = server.to_dict()
       print('id={} name={} created={}'.format(info['id'], info['name'], info['created']))
 
+  #lise-endpoints (name="test", type="test")
+  services = client.services.list(name="test", type="test")
+  if len(services) == 0:
+  	raise Exception("service isn't found")
+  endpoint = services[0].links['self']
 
 
 example server monitor program
