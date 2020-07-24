@@ -24,6 +24,13 @@ kubectl version
 ```
 ```
 
+## CLI
+
+```
+kubectl port-forward nginx-deployment-7fd6966748-bwj5t 7000:80
+curl localhost:7000
+```
+
 ## Manifests
 
 ```
