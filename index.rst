@@ -38,6 +38,7 @@ Thank you.
    :maxdepth: 1
    :caption: misc
 
+   misc/prometheus
    misc/consul
    misc/ansible
    misc/jq
