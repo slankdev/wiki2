@@ -721,6 +721,19 @@ Name: SEG6
 ...(snip)...
 ```
 
+tc (traffic control)
+- pfifo: per-Packet FIFO
+- bfifo: per-Byte FIFO
+- sfq: Stochastic Fairness Queuing
+- tbf: Token Bucket Filter
+- netem: Network Emulator (Delay, Loss, etc.)
+- fq: Fair Queue Packet Scheduling
+```
+tc qdisc show dev eth0
+tc qdisc del  dev eth0 root
+tc qdisc add  dev eth0 root tbf limit 1Mb buffer 200Kb rate 1Mbps
+```
+
 ## ethtool
 
 ```
