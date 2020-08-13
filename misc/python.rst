@@ -653,13 +653,17 @@ Ansible Custom Module
               module.params["os_project_name"],
               module.params["os_auth_url"])
 
+      some_error = false
+      if some_error:
+        module.fail_json(msg={"some_reason":"hoge hoge","val":12})
+
       ## (1) Check Role Is Exist
       name = module.params["object_name"]
       obj = get_obj_by_name(namt, os_token)
       if obj is None:
           create_obj(name, os_token)
           changed = True
-      module.exit_json(changed=changed)
+      module.exit_json(changed=changed, msg={"some":"message","val":12})
 
   from ansible.module_utils.basic import AnsibleModule
   if __name__ == "__main__": main()
