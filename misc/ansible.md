@@ -21,61 +21,61 @@ cumulus ansible_ssh_private_key_file=~/.ssh/id_rsa
 [user create](https://docs.ansible.com/ansible/latest/modules/user_module.html)
 ```
 - user:
-		name: stack
-		password: "{{ 'stack' | password_hash('sha512') }}"
-		shell: /usr/bin/bash
-		home: /opt/stack
-		state: present
+    name: stack
+    password: "{{ 'stack' | password_hash('sha512') }}"
+    shell: /usr/bin/bash
+    home: /opt/stack
+    state: present
 ```
 
 [create file or directory (file module)](https://docs.ansible.com/ansible/latest/modules/file_module.html)
 ```
 - file:
-		path: /opt/stack/.ssh
-		state: directory
-		owner: stack
-		group: stack
-		mode: 755
+    path: /opt/stack/.ssh
+    state: directory
+    owner: stack
+    group: stack
+    mode: 755
 ```
 
 shell
 ```
 - shell: |
-		echo slankdev > /tmp/out
-		echo slankdev1 > /tmp/out2
-		echo slankdev2 >> /tmp/out
+    echo slankdev > /tmp/out
+    echo slankdev1 > /tmp/out2
+    echo slankdev2 >> /tmp/out
 ```
 
 file copy and fetch
 ```
 - copy:
-		src: files/bashrc
-		dest: /etc/bashrc
-		mode: 644
-		owner: stack
-		group: stack
+    src: files/bashrc
+    dest: /etc/bashrc
+    mode: 644
+    owner: stack
+    group: stack
 
 - fetch:
-		src: /tmp/filename
-		dest: outputs
-		# ./outputs/{{ hostname }}/tmp/filename
+    src: /tmp/filename
+    dest: outputs
+    # ./outputs/{{ hostname }}/tmp/filename
 
 - fetch:
-		src: /tmp/filename
-		dest: outputs
-		flat: yes
-		# ./outputs/filename
+    src: /tmp/filename
+    dest: outputs
+    flat: yes
+    # ./outputs/filename
 ```
 
 yum install
 ```
 - yum:
-	name: {{ item }}
-	state=present
-	become: True
-	with_items:
-		- epel-release
-		- e2fsprogs
+  name: {{ item }}
+  state=present
+  become: True
+  with_items:
+    - epel-release
+    - e2fsprogs
 
 - yum:
     name: /tmp/package.el7.x86_64.rpm
@@ -98,7 +98,7 @@ $ cat main.yml
   tasks:
     - shell: "echo slank1"
     - shell: "echo slank2"
-		  tags: red
+      tags: red
 
 $ ansible-playbook main.yml --tags='red'          #-->slank2
 $ ansible-playbook main.yml --skip-tags='red'     #-->slank1
@@ -108,6 +108,20 @@ $ ansible-playbook main.yml --skip-tags='red'     #-->slank1
 
 ```
   ansible_date_time.iso8601_basic_short
+```
+
+special vars
+```yaml
+all:
+  children:
+    robot:
+      hosts:
+        robot1:
+        robot2
+```
+
+```yaml
+{{ inventory_hostname }} # robot1,robot2
 ```
 
 ## nclu plugin for cumulus
