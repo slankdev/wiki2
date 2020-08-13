@@ -640,6 +640,7 @@ Ansible Custom Module
               os_password     = dict(required=True),
               os_project_name = dict(required=True),
               object_name     = dict(requests=True),
+              mode            = dict(default='a', choices=['a', 'b']),
           ),
           supports_check_mode = True
       )
