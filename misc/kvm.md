@@ -401,6 +401,19 @@ VFの作成
 
 - https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/sect-sr_iov-using_sr_iov
 
+## Raw ethernet Device
+
+```
+    <interface type='ethernet'>
+      <mac address='fa:16:3f:dc:a1:85'/>
+      <script path=''/>
+      <target dev='tap40e651c4-26'/>
+      <model type='virtio'/>
+      <alias name='net0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
+    </interface>
+```
+
 ## CPU Hotplug
 
 ```
