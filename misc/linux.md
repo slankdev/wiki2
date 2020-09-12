@@ -734,6 +734,12 @@ tc qdisc del  dev eth0 root
 tc qdisc add  dev eth0 root tbf limit 1Mb buffer 200Kb rate 1Mbps
 ```
 
+### tc でパケットフィルタを用意する.
+- filterを定義して何かしらのactionを実施する
+
+FILTER EXAMPLE
+- ip.protocol==1 `match ip protocol 0x01 0xff`
+
 ## ethtool
 
 ```
