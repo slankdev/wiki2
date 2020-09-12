@@ -750,6 +750,12 @@ tc qdisc add  dev eth0 root tbf limit 1Mb buffer 200Kb rate 1Mbps
 	- `u32 match u16 A B at N` のA,Bは 16bitで指定する
 	- `u32 match u8  A B at N` のA,Bは  8bitで指定する
 
+```
+tc qdisc add dev net0 root handle 10: prio
+tc filter add dev net0 parent 10: prio 10 protocol all u32 match u32 0 0 flowid 10:1 action mirred egress mirror dev mon0
+tc filter add dev net0 parent 10: prio 10 protocol all u32 match ip protocol 0x01 0xff flowid 10:1 action mirred egress mirror dev mon0
+```
+
 - 32bit越えの幅があるケース
 	- 複数のルールを書けば良い
 	- 例: src = 10.0.0.1 and dst 10.0.0.2
