@@ -735,10 +735,19 @@ tc qdisc add  dev eth0 root tbf limit 1Mb buffer 200Kb rate 1Mbps
 ```
 
 ### tc でパケットフィルタを用意する.
-- filterを定義して何かしらのactionを実施する
 
-FILTER EXAMPLE
-- ip.protocol==1 `match ip protocol 0x01 0xff`
+- tc-u32 is universal 32bit traffic control filter
+	- man: https://man7.org/linux/man-pages/man8/tc-u32.8.html
+	- filterを定義して何かしらのactionを実施することができる
+- `u32 match W A B at N` は ethernet headerの先頭からの `u32[N]` を意味する
+- 以下三種類は基本的には同じだし, シンプルにするため, `u32 match u32` で統一した方がいい.
+	- `u32 match u32 A B at N` のA,Bは 32bitで指定する
+	- `u32 match u16 A B at N` のA,Bは 16bitで指定する
+	- `u32 match u8  A B at N` のA,Bは  8bitで指定する
+- FILTER EXAMPLE
+	- ip.protocol==1 `u32 match ip protocol 0x01 0xff`
+	- ip.protocol==1 `u32 match u32 0x00010000 0x00ff0000 at 8`
+	- ip.protocol==1 `u32 match u16 0x0001     0x00ff     at 8`
 
 ## ethtool
 
