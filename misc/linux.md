@@ -740,6 +740,10 @@ tc qdisc add  dev eth0 root tbf limit 1Mb buffer 200Kb rate 1Mbps
 	- man: https://man7.org/linux/man-pages/man8/tc-u32.8.html
 	- filterを定義して何かしらのactionを実施することができる
 
+#### 基本的な用語
+
+- class: `1:10`とか`1:1` とか表現されるやつ. filtrを配置することができる.
+
 #### matchに関して
 - `u32 match W A B at N` は ethernet headerの先頭からの `u32[N]` を意味する
 - `u32 match u32 A B at N`構文であらゆるmatchを実現できるけど,
