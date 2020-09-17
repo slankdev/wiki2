@@ -405,11 +405,10 @@ VFの作成
 
 ```
     <interface type='ethernet'>
-      <mac address='fa:16:3f:dc:a1:85'/>
+      <mac address='52:54:00:11:11:11'/>
       <script path=''/>
-      <target dev='tap40e651c4-26'/>
+      <target dev='tap1111111'/>
       <model type='virtio'/>
-      <alias name='net0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
     </interface>
 ```
