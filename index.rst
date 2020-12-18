@@ -90,6 +90,7 @@ Thank you.
    misc/ios
    misc/cumulus
    misc/frr
+   misc/panos
 
 .. toctree::
    :maxdepth: 1
