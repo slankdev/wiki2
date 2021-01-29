@@ -41,3 +41,8 @@ split-window -v 'while true; do echo pane 0 ; sleep 1 ; done'
 
 $ tmux source-file source.tmux
 ```
+
+command execution
+```
+tmux send-keys -t 1 "ping localhost" Enter
+```
