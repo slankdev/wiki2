@@ -1,6 +1,6 @@
 ## Flex-Algo DEMO
 
 ```
-ln -s ./jump.conf ~/.ssh/config
+ln -s ./ssh_config ~/.ssh/config
 chmod 600 ~/.ssh/config
 ```
